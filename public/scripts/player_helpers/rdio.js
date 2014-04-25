@@ -1,3 +1,4 @@
+try {
 R.ready(function () {
 
   var playerScope = angular.element(document.getElementById("youtube")).scope();
@@ -25,3 +26,13 @@ R.ready(function () {
     lastPosition = position;
   });
 });
+} catch(err) {
+angular.element(document).ready(
+function () {
+
+  var playerScope = angular.element(document.getElementById("youtube")).scope();
+  var frameScope = angular.element(document.getElementById("search")).scope();
+  var lastPosition = false;
+  frameScope.stopLoadingBar("Rdio");
+});
+}

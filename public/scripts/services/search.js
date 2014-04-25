@@ -36,7 +36,10 @@ angular.module('ammoApp')
       limit = limit || 4;
       var d = $q.defer();
 
-      getRdioSongs(userInput, limit, timeLimit, d);
+      try{
+        getRdioSongs(userInput, limit, timeLimit, d);
+      } catch (err) {
+      }
       return d.promise;
     };
 

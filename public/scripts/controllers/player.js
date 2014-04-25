@@ -120,7 +120,10 @@ angular.module('ammoApp')
       youtube.pauseVideo();
       scPlayer.pause();
       // DZ.player.pause();
-      R.player.pause();
+      try {
+        R.player.pause();
+      } catch (err){
+      }
     };
 
     /*
