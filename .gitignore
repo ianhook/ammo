@@ -39,4 +39,9 @@ node_modules
 ### WebStorm ###
 .idea/
 
+### Vi ###
+*~
 
+### internals ###
+secret.js
+public/scripts/config.js

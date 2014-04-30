@@ -1,8 +1,8 @@
-angular.module('ammoApp', ['ngRoute', 'ngProgress', 'ngCookies', 'ui.sortable', 'angular-google-analytics'])
+angular.module('ammoApp', ['ngRoute', 'ngProgress', 'ngCookies', 'ui.sortable', 'angular-google-analytics', 'ammoApp.config'])
 
-  .config(function ($routeProvider, $locationProvider, AnalyticsProvider) {
+  .config(function ($routeProvider, $locationProvider, AnalyticsProvider, ammoConfig) {
     //setup your account
-    AnalyticsProvider.setAccount('UA-50145036-1'); // automatic route tracking (default=true)
+    AnalyticsProvider.setAccount(ammoConfig.analytics); // automatic route tracking (default=true)
     AnalyticsProvider.trackPages(true);
     //Optional set domain (Use 'none' for testing on localhost)
     AnalyticsProvider.setDomainName('ammo.io');
@@ -38,7 +38,7 @@ angular.module('ammoApp', ['ngRoute', 'ngProgress', 'ngCookies', 'ui.sortable', 
         redirectTo: '/listen'
       });
 
-    OAuth.initialize('YTaWoCjSvB9X8LcCyc8hn6sp798');
+    OAuth.initialize(ammoConfig.oauth.public);
 
   })
 

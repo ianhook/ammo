@@ -74,7 +74,7 @@ angular.module('ammoApp')
       $http({
         method: 'POST',
         url: '/login',
-        data: { code: res.code }
+        data: { code: res.access_token }
       })
         // set the user on success
         .success(function (userObj) {

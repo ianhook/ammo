@@ -12,7 +12,7 @@ angular.module('ammoApp')
     async GET returns an argument with a set of properties. See var song for reference.
 
   */
-  .service('SearchService', function ($http, $q, $rootScope, $timeout) {
+  .service('SearchService', ['$http','$q','$rootScope','$timeout','ammoConfig', function ($http, $q, $rootScope, $timeout, ammoConfig) {
     this.searchResults = []; // store search results
 
     //do a time limit for searching
@@ -48,12 +48,11 @@ angular.module('ammoApp')
       //limit: number of results to return
       limit = limit || 4;
       var d = $q.defer();
-      var clientId = "456165005356d6638c4eabfc515d11aa"; //clientId for soundcloud api authorization
 
       //searchUrl: get request url for query
       //"q" is the search query
       var searchUrl = "http://api.soundcloud.com/tracks?";
-      searchUrl = searchUrl + "q=" + userInput + "&limit=" + limit + "&client_id=" + clientId + "&format=json";
+      searchUrl = searchUrl + "q=" + userInput + "&limit=" + limit + "&client_id=" + ammoConfig.soundcloud.id + "&format=json";
 
       getSoundcloudSongs(searchUrl, timeLimit, d);
       return d.promise;
@@ -90,7 +89,7 @@ angular.module('ammoApp')
       var youtubeTimer = $timeout(function () {
         d.resolve([]);
       }, timeLimit);
-      $http({ method: 'GET', url: 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=' + limit + '&q=' + userInput + '&type=video&videoCategoryId=10&key=AIzaSyCsNh0OdWpESmiBBlzjpMjvbrMyKTFFFe8' })
+      $http({ method: 'GET', url: 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=' + limit + '&q=' + userInput + '&type=video&videoCategoryId=10&key=' + ammoConfig.googleapi.id })
         .success(function (results) {
           $timeout.cancel(youtubeTimer);
           var youtubeResults = [];
@@ -110,7 +109,7 @@ angular.module('ammoApp')
 
     var getVideoData = function (video, youtubeResults, compare, d) {
       var service_id = video.id.videoId; // We need this here because we are using the service_id to generate the url
-      $http({ method: 'GET', url: 'https://www.googleapis.com/youtube/v3/videos?id=' + service_id + '&part=contentDetails&key=AIzaSyCsNh0OdWpESmiBBlzjpMjvbrMyKTFFFe8' })
+      $http({ method: 'GET', url: 'https://www.googleapis.com/youtube/v3/videos?id=' + service_id + '&part=contentDetails&key=' + ammoConfig.googleapi.id })
         .success(function (newResults) {
           if (newResults.pageInfo.totalResults === 0) {
             compare.total--;
@@ -204,7 +203,7 @@ angular.module('ammoApp')
       });
       d.resolve(rdioResults);
     };
-  });
+  }]);
 
     //  ***********  DO NOT DELETE THIS FUNCTION/Comment will be used when Deezer is available in the US (soon)  **********// 
     // This function needs refactor to promises

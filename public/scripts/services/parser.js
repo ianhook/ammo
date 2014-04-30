@@ -12,7 +12,7 @@ angular.module('ammoApp')
 //    then you need to resolve the promise and it returns a song object, you can see an example of a resolved one here:
 //    http://api.soundcloud.com/tracks/82964169.json?client_id=456165005356d6638c4eabfc515d11aa
 
-  .service('ParseService', function ($http, SearchService) {
+  .service('ParseService', ['$http','SearchService','ammoConfig', function ($http, SearchService, ammoConfig) {
     this.youtube = function (url) {
       var regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
       var match = url.match(regExp);
@@ -21,7 +21,7 @@ angular.module('ammoApp')
         // return match[1];
         var id = match[1];
 
-        $http({ method: 'GET', url: 'https://www.googleapis.com/youtube/v3/videos?id=' + id + '&part=snippet,contentDetails&key=AIzaSyCsNh0OdWpESmiBBlzjpMjvbrMyKTFFFe8' })
+        $http({ method: 'GET', url: 'https://www.googleapis.com/youtube/v3/videos?id=' + id + '&part=snippet,contentDetails&key=' + ammoConfig.googleapi.id })
           .then(function (results) {
             var duration = results.data.items[0].contentDetails.duration;
             var hours = duration.match(/(\d+)(?=[H])/ig) || [0];
@@ -65,7 +65,7 @@ angular.module('ammoApp')
     };
 
     this.soundcloud = function (url) {
-      $http({ method: 'GET', url: 'http://api.soundcloud.com/resolve.json?url=' + url + '&client_id=456165005356d6638c4eabfc515d11aa'})
+      $http({ method: 'GET', url: 'http://api.soundcloud.com/resolve.json?url=' + url + '&client_id=' + ammoConfig.soundcloud.id})
         .then(function (track) {
 
           if (!track.data.streamable || track.data.sharing !== 'public') {
@@ -111,4 +111,4 @@ angular.module('ammoApp')
         this.rdio(url);
       }
     };
-  });
+  }]);

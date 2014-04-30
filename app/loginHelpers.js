@@ -1,6 +1,7 @@
 var request = require('request');
 var User = require('./models/user_model');
 var Queue = require('./models/queue_model');
+var Config = require('../secret');
 var Q = require('q');
 
 module.exports = {
@@ -19,12 +20,13 @@ module.exports = {
     };
 
 
-    request.post({
+    console.log(code);
+    /*request.post({
       url: 'https://oauth.io/auth/access_token',
       form: {
         code: code,
-        key: "YTaWoCjSvB9X8LcCyc8hn6sp798",
-        secret: "r_GbPTQSfoJyaahblrZMSb5nBIg"
+        key: Config.data.oauth.public,
+        secret: Config.data.oauth.secret
       }
     }, function (err, req, body) {
       if (err) {
@@ -33,17 +35,17 @@ module.exports = {
       }
       var data = JSON.parse(body);
       if (!data.state) {
-        d.reject("Got error:" + body);
+        d.reject("Got error: " + body);
         return;
       }
       if (data.state !== sessionId) {
         d.reject("Oups, state does not match !");
         return;
       }
-
+*/
       //Fetch username from facebook
       request.get({
-        url: "https://graph.facebook.com/me?access_token=" + data.access_token
+        url: "https://graph.facebook.com/me?access_token=" + code
       }, function (err, req, body) {
         if (err) {
           console.log("Facebook Error: ", err);
@@ -66,13 +68,15 @@ module.exports = {
               });
           });
       });
-    });
+    //});
 
     return d.promise;
   },
 
   validateSession: function (username, sessionId) {
     var d = Q.defer();
+    console.log(username);
+    console.log(sessionId);
 
     User.getSession(username)
       .then(function (validSessionId) {

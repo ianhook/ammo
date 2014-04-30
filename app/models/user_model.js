@@ -56,11 +56,13 @@ userSchema.statics = {
     var d = Q.defer();
     this.findOne({username: username}, function (err, user) {
       if (err) {
+        console.log(err);
         d.reject(err);
       } else {
         if (!user) {
           d.reject("no user found");
         } else {
+          console.log(user);
           d.resolve(user.sessionId);
         }
       }
