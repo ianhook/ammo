@@ -2,6 +2,7 @@ var user = require('../controllers/user_controllers');
 var queue = require('../controllers/queue_controllers');
 var playlist = require('../controllers/playlist_controllers');
 var scrape = require('../controllers/scrape_controllers');
+var config = require('../../secret');
 
 
 module.exports = function (app) {
@@ -28,6 +29,9 @@ module.exports = function (app) {
 
   /* ======== Scrape Routes ========*/
   app.get('/scrape/:artist', scrape.scrape);
+
+  /* ======== Config Routes ========*/
+  app.get('/config', config.safe);
 
   /* ======== Catch-All Route ========*/
   app.get('*', function (req, res) {
