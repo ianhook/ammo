@@ -1,6 +1,6 @@
 {
   "name": "ammo",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "homepage": "https://github.com/ammoio/ammo",
   "authors": [
     "ammo.io <hackers@ammo.io>"
@@ -18,16 +18,15 @@
     "angular": "~1.2.12",
     "angular-route": "~1.2.12",
     "font-awesome": "~4.0.3",
-    "jquery": "~2.1.0",
+    "jquery": "~1.8.0",
     "ngprogress": "~1.0.4",
     "angular-cookies": "~1.2.13",
     "angular-google-analytics":"0.0.2",
     "socket.io-client": "~0.9.16",
     "angular-ui-sortable": "~0.12.0",
     "jquery-ui": "~1.10.4",
-    "jquery-dropdown": "~1.0.4"
-  },
-  "resolutions": {
-    "jquery": "~2.1.0"
+    "jquery-dropdown": "~1.0.4",
+    "angular-google-analytics": "~0.0.2",
+    "angular-ui-router": "~0.2.10"
   }
 }
